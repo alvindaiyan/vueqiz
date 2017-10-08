@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <el-row :gutter="20">
-      <el-col :span="12" :offset="6">
+      <el-col :span="24" >
         <router-view></router-view>
       </el-col>
     </el-row>
