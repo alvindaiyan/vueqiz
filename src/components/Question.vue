@@ -9,7 +9,7 @@
 
         <el-checkbox-group v-for="(o, index) in question.options" :key="index" class="option item" v-model="userChosen">
           <el-checkbox :label="index"
-          :class="{'item-correct': varify(index, o) && submitted, 'item-incorrect': !varify(index, o) && submitted}"
+          :class="{'item-correct': varify(index, o) && submitted && used(index), 'item-incorrect': !varify(index, o) && submitted, 'item-unknown': submitted && !used(index) && !o.correct}"
           @change="select"
           :disabled="submitted">{{o.content}}</el-checkbox>
         </el-checkbox-group>
@@ -57,6 +57,9 @@ export default {
     varify(id, opt) {
       return opt.correct === (this.selected.indexOf(id) !== -1);
     },
+    used(id) {
+      return this.selected.indexOf(id) !== -1;
+    },
   },
 };
 </script>
@@ -81,6 +84,12 @@ export default {
 
   .item-incorrect {
     border-left: 6px solid #FF4949;
+    color:#1F2D3D !important;
+    padding-left: 10px
+  }
+
+  .item-unknown {
+    border-left: 6px solid #FFFFFF;
     color:#1F2D3D !important;
     padding-left: 10px
   }

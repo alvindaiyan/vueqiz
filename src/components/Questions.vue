@@ -3,7 +3,7 @@
   <el-row class="result">
     <el-col :span="24">
       <el-alert
-        :title="correct ? 'well done!' : 'no no no!!!'"
+        :title="correct ? 'well done!' : 'no no no!!! you dumbass:)'"
         :type="correct ? 'success' : 'error'" v-if="submitted" :closable="false">
       </el-alert>
     </el-col>
@@ -32,7 +32,7 @@
     <el-col :span="24">
       <el-collapse v-model="activeNames" v-if="question.explanations && question.explanations.length > 0">
         <el-collapse-item title="Explanation" name="1">
-          <p>{{question.explanations.join('\n')}}</p>
+          <p v-html="explanation"></p>
         </el-collapse-item>
         <el-collapse-item title="Links" name="2" v-if="question.links && question.links.length > 0">
           <div v-for="(link, id) in question.links" :key="id" >
@@ -109,6 +109,9 @@ export default {
       });
 
       return isCorrect && sizeOfCorrect === this.selected.length;
+    },
+    explanation() {
+      return this.question.explanations.join('<br/>');
     },
   },
   data() {
