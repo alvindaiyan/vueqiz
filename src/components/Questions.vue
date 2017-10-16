@@ -16,7 +16,7 @@
 
   <el-row>
     <el-col :span="24">
-      <yan-question :question="q" :submitted="submitted" :selected="selected" @selected="select" ></yan-question>
+      <yan-question :question="q" :submitted="submitted" :selected="selected" @selected="select"></yan-question>
     </el-col>
   </el-row>
   <el-row class="control">
@@ -58,6 +58,7 @@ export default {
   },
   computed: {
     ...mapGetters({
+      currentId: 'currentId',
       question: 'current',
       canNext: 'canNext',
       canPrev: 'canPrev',
@@ -65,6 +66,12 @@ export default {
       percentage: 'scoreInPercentage',
     }),
     q() {
+      if (this.question.result) {
+        this.selected = this.question.result.selected;
+        this.submitted = true;
+        return this.question.result.question;
+      }
+
       this.submitted = false;
       this.selected = [];
       const shuffle = (a) => {
@@ -93,6 +100,7 @@ export default {
 
       shuffle(options);
       return {
+        id: this.currentId + 1,
         topic,
         options,
       };
@@ -133,6 +141,7 @@ export default {
       this.push(
         {
           question: this.q,
+          submitted: true,
           selected: this.selected,
           correct: this.correct,
         },

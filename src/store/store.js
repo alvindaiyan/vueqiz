@@ -7,11 +7,11 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     currentId: 0,
-    history: [],
     questions: data,
     correctCount: 0,
   },
   getters: {
+    currentId: ({ currentId }) => currentId,
     current: ({ currentId, questions }) => questions.find(q => q.id === `${currentId}`),
     canNext: ({ currentId, questions }) => currentId === questions.length - 1,
     canPrev: ({ currentId }) => currentId === 0,
@@ -25,7 +25,7 @@ export default new Vuex.Store({
         return state.questions[0];
       }
       state.currentId -= 1;
-      return state.history[state.history.length - 1];
+      return state.currentId;
     },
     next(state) {
       if (state.currentId === state.questions.length - 1) {
@@ -35,7 +35,7 @@ export default new Vuex.Store({
       return state.currentId;
     },
     submit(state, payload) {
-      state.history.push(payload);
+      state.questions[state.currentId].result = payload;
       if (payload.correct) {
         state.correctCount += 1;
       }

@@ -2,7 +2,7 @@
   <div class="question">
     <el-card class="box-card">
         <div slot="header" class="clearfix">
-          <span style="line-height: 36px; text-align: left;">{{ question.topic }}</span>
+          <span style="line-height: 36px; text-align: left;">{{question.id}}. {{ question.topic }}</span>
           <el-button style="float: right;" type="primary" @click="reset" :disabled="submitted">Reset</el-button>
         </div>
         <!-- @change="select(index, o)" -->
