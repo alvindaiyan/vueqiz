@@ -43,7 +43,11 @@ export default {
   },
   watch: {
     question() {
-      this.cache = [];
+      if (this.submitted) {
+        this.cache = this.selected;
+      } else {
+        this.cache = [];
+      }
     },
   },
   methods: {
