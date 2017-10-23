@@ -64,8 +64,12 @@ export default {
       canPrev: 'canPrev',
       score: 'score',
       percentage: 'scoreInPercentage',
+      loading: 'loading',
     }),
     q() {
+      if (!this.question) {
+        return {};
+      }
       if (this.question.result) {
         this.selected = this.question.result.selected;
         this.submitted = true;

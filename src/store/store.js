@@ -1,16 +1,18 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import data from '../../static/data.json';
+// import data from '../../static/data.json';
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
     currentId: 0,
-    questions: data,
+    questions: [],
     correctCount: 0,
+    loading: false,
   },
   getters: {
+    loading: ({ loading }) => loading,
     currentId: ({ currentId }) => currentId,
     current: ({ currentId, questions }) => questions.find(q => q.id === `${currentId}`),
     canNext: ({ currentId, questions }) => currentId === questions.length - 1,
@@ -39,6 +41,12 @@ export default new Vuex.Store({
       if (payload.correct) {
         state.correctCount += 1;
       }
+    },
+    load(state, payload) {
+      state.loading = payload;
+    },
+    setQuestions(state, payload) {
+      state.questions = payload;
     },
   },
 });

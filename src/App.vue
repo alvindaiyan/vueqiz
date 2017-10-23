@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" v-loading="loading">
     <el-row :gutter="20">
       <el-col :span="24" >
         <router-view></router-view>
@@ -9,8 +9,31 @@
 </template>
 
 <script>
+import { mapGetters, mapMutations } from 'vuex';
+
 export default {
   name: 'app',
+  computed: {
+    ...mapGetters([
+      'loading',
+    ]),
+  },
+  methods: {
+    ...mapMutations(['load', 'setQuestions']),
+  },
+  created() {
+    this.load(true);
+    // load questions from firebase
+    this.$http.get('https://vue-questions.firebaseio.com/.json')
+    .then((resp) => {
+      this.setQuestions(resp.data);
+      this.load(false);
+    })
+    .catch((err) => {
+      this.load(false);
+      console.log(err);
+    });
+  },
 };
 </script>
 
